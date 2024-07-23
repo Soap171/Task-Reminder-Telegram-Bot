@@ -19,11 +19,18 @@ setInterval(async () => {
   const tasks = await Task.find({ dueDate: { $lte: now }, notified: false });
 
   tasks.forEach(async (task) => {
-    const chatId = task.telegramId;
-    await bot.sendMessage(chatId, `Reminder: ${task.description} is due now!`);
-    task.notified = true;
-    await task.save();
-    console.log("checked");
+    try {
+      const chatId = task.telegramId;
+      await bot.sendMessage(
+        chatId,
+        `Reminder: ${task.description} is due now!`
+      );
+      task.notified = true;
+      await task.save();
+      console.log("checked");
+    } catch (error) {
+      console.log(error);
+    }
   });
 }, 60000); // Check every minute
 
