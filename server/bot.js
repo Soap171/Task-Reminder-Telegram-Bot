@@ -5,15 +5,6 @@ import Task from "./models/task.js";
 dotenv.config();
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 
-mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("Failed to connect to MongoDB", err));
-
-// Notify users about their tasks
 setInterval(async () => {
   const now = new Date();
   const tasks = await Task.find({ dueDate: { $lte: now }, notified: false });
@@ -32,6 +23,6 @@ setInterval(async () => {
       console.log(error);
     }
   });
-}, 60000); // Check every minute
+}, 60000);
 
 export default bot;
