@@ -1,10 +1,10 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-require("dotenv").config();
-
-const taskRoutes = require("./routes/task");
-const bot = require("./bot"); // This ensures the bot script is run
+import express from "express";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import bot from "./bot.js";
+import taskRoutes from "./routes/task.js";
+import Task from "./models/task.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;

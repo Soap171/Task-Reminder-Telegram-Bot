@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const taskSchema = new mongoose.Schema({
   telegramId: { type: String, required: true },
@@ -6,5 +6,6 @@ const taskSchema = new mongoose.Schema({
   dueDate: { type: Date, required: true },
   notified: { type: Boolean, default: false },
 });
+const Task = mongoose.model("Task", taskSchema);
 
-module.exports = mongoose.model("Task", taskSchema);
+export default Task;

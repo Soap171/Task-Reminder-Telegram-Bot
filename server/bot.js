@@ -1,8 +1,8 @@
-const TelegramBot = require("node-telegram-bot-api");
-const mongoose = require("mongoose");
-const Task = require("./models/task");
-require("dotenv").config();
-
+import TelegramBot from "node-telegram-bot-api";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import Task from "./models/task.js";
+dotenv.config();
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 
 mongoose
@@ -34,4 +34,4 @@ setInterval(async () => {
   });
 }, 60000); // Check every minute
 
-module.exports = bot;
+export default bot;

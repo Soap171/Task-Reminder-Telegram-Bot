@@ -1,7 +1,6 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const Task = require("../models/task");
-
+import Task from "../models/task.js";
 // Create a new task
 router.post("/", async (req, res) => {
   const { telegramId, description, dueDate } = req.body;
@@ -14,4 +13,4 @@ router.post("/", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
