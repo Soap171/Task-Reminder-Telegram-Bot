@@ -6,6 +6,11 @@ const taskSchema = new mongoose.Schema({
   description: { type: String, required: true },
   dueDate: { type: Date, required: true },
   notified: { type: Boolean, default: false },
+  recurrence: {
+    type: String,
+    enum: ["weekly", "monthly", "yearly"],
+    default: "none",
+  },
 });
 
 // Middleware to adjust dueDate to Sri Lanka time before saving

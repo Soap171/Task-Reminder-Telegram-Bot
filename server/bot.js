@@ -25,6 +25,21 @@ setInterval(async () => {
         `Reminder: ${task.description} is due now!`
       );
       task.notified = true;
+
+      // Handle recurrence
+      if (task.recurrence === "weekly") {
+        task.dueDate = new Date(
+          task.dueDate.getTime() + 7 * 24 * 60 * 60 * 1000
+        ); // Add 7 days
+        task.notified = false;
+      } else if (task.recurrence === "monthly") {
+        task.dueDate.setMonth(task.dueDate.getMonth() + 1); // Add 1 month
+        task.notified = false;
+      } else if (task.recurrence === "yearly") {
+        task.dueDate.setFullYear(task.dueDate.getFullYear() + 1); // Add 1 year
+        task.notified = false;
+      }
+
       await task.save();
       console.log(`Notification sent for task: ${task.description}`);
     } catch (error) {

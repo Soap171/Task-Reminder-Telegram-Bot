@@ -1,9 +1,9 @@
 import Task from "../models/task.js";
 
 export const addTask = async (req, res) => {
-  const { telegramId, description, dueDate } = req.body;
+  const { telegramId, description, dueDate, recurrence } = req.body;
   try {
-    const task = new Task({ telegramId, description, dueDate });
+    const task = new Task({ telegramId, description, dueDate, recurrence });
     await task.save();
     res.status(201).json(task);
   } catch (error) {
