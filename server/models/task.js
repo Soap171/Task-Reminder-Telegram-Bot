@@ -8,8 +8,12 @@ const taskSchema = new mongoose.Schema({
   notified: { type: Boolean, default: false },
   recurrence: {
     type: String,
-    enum: ["weekly", "monthly", "yearly"],
+    enum: ["none", "weekly", "monthly", "yearly"],
     default: "none",
+  },
+  retryAttempts: {
+    type: Number,
+    default: 0,
   },
 });
 

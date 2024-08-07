@@ -2,6 +2,10 @@ import Task from "../models/task.js";
 
 export const addTask = async (req, res) => {
   const { telegramId, description, dueDate, recurrence } = req.body;
+
+  if (!telegramId || !description || !dueDate || !recurrence) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
   try {
     const task = new Task({ telegramId, description, dueDate, recurrence });
     await task.save();
