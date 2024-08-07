@@ -1,7 +1,10 @@
 import express from "express";
-const router = express.Router();
+import { verifyToken } from "../utils/verifyToken.js"; // middleware use to verify user token and attach to the req
 import addTask from "../controllers/task.js";
-// Create a new task
-router.post("/", addTask);
+
+const router = express.Router();
+
+// create task
+router.post("/", verifyToken, addTask);
 
 export default router;

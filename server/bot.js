@@ -13,7 +13,7 @@ const RETRY_DELAY = 60000;
 setInterval(async () => {
   console.log("Interval function called");
   const now = new Date();
-  //now.setDate(now.getDate() + 2);
+  //now.setDate(now.getDate() + 1);  handle the next day notifiecations if need
   console.log(now);
   const tasks = await Task.find({ dueDate: { $lte: now }, notified: false });
 
@@ -34,19 +34,24 @@ async function sendNotification(task) {
     // Simulate a failure
     //if (Math.random() < 0.5) {
     // throw new Error("Simulated failure");
-    //}
+    //}  (To test the retry mechanism)
     await bot.sendMessage(chatId, `Reminder: ${task.description} is due now!`);
     task.notified = true;
 
     // Handle recurrence
     if (task.recurrence === "weekly") {
-      task.dueDate = new Date(task.dueDate.getTime() + 7 * 24 * 60 * 60 * 1000); // Add 7 days
+      task.dueDate = new Date(task.dueDate.getTime() + 7 * 24 * 60 * 60 * 1000);
       task.notified = false;
     } else if (task.recurrence === "monthly") {
-      task.dueDate.setMonth(task.dueDate.getMonth() + 1); // Add 1 month
+      let newDueDate = new Date(task.dueDate.getTime());
+
+      newDueDate.setMonth(newDueDate.getMonth() + 1);
+      task.dueDate = newDueDate;
       task.notified = false;
     } else if (task.recurrence === "yearly") {
-      task.dueDate.setFullYear(task.dueDate.getFullYear() + 1); // Add 1 year
+      let newDueDate = new Date(task.dueDate.getTime());
+      newDueDate.setFullYear(newDueDate.getFullYear() + 1);
+      task.dueDate = newDueDate;
       task.notified = false;
     }
 
@@ -71,6 +76,7 @@ async function sendNotification(task) {
   }
 }
 
+// Bot cmds
 bot.onText(/\/mytasks/, async (msg) => {
   const chatId = msg.chat.id;
   const tasks = await Task.find({ telegramId: chatId });

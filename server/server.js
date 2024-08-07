@@ -2,32 +2,28 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import bot from "./bot.js";
 import taskRoutes from "./routes/task.js";
-import Task from "./models/task.js";
+import authRoutes from "./routes/auth.js";
+import cookieParser from "cookie-parser";
+import bot from "./bot.js";
 
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// Middlewares
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 // Routes
 app.use("/api/tasks", taskRoutes);
+app.use("/api/auth", authRoutes);
 
 // Database connection
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGODB_URI)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Failed to connect to MongoDB", err));
-
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
 
 // error handle middleware
 app.use((err, req, res, next) => {
@@ -38,4 +34,9 @@ app.use((err, req, res, next) => {
     statusCode,
     message,
   });
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
