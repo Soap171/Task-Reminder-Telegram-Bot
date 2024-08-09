@@ -1,35 +1,33 @@
 import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import aboutImg from "../images/TaskNotifier.png";
 
 function About() {
   return (
-    <div className="container">
-      <div className="row align-items-center vh-100">
-        <div className="col-12 col-md-6">
-          <img
-            src={aboutImg}
-            alt="About the project"
-            className="img-fluid mx-auto"
-          />
+    <div className="container mt-5">
+      <div className="row justify-content-center align-items-center p-5">
+        <div className=" col-md-6 text-center">
+          <img src={aboutImg} className="img-fluid" alt="About us" />
         </div>
-        <div className="col-12 col-md-6">
+        <div className=" col-md-6">
+          <h2 className="text-muted">About Us</h2>
           <p>
-            Welcome to our project! This application is designed to help users
-            manage their tasks efficiently and stay organized. Our goal is to
-            provide a simple and intuitive interface that allows users to
-            create, edit, and track their tasks with ease.
+            Welcome to Task Reminder Telegram! Our mission is to help you stay
+            organized and on top of your tasks with ease. We understand the
+            importance of managing your time effectively, and our tool is
+            designed to send you timely reminders directly through Telegram.
           </p>
-          <p>Key Features:</p>
-          <ul>
-            <li>Task creation and management</li>
-            <li>Reminders and notifications</li>
-            <li>Recurring tasks</li>
-            <li>Integration with Telegram for task reminders</li>
-          </ul>
           <p>
-            We hope you find this application useful and it helps you stay on
-            top of your tasks. If you have any feedback or suggestions, please
-            feel free to reach out to us.
+            Our team is composed of dedicated professionals who are passionate
+            about productivity and technology. We strive to provide a seamless
+            and user-friendly experience, ensuring that you never miss a
+            deadline or forget an important task.
+          </p>
+          <p>
+            Whether you're managing personal errands, work projects, or
+            collaborative tasks, Task Reminder Telegram is here to support you.
+            Join us on our journey to make task management simpler and more
+            efficient.
           </p>
         </div>
       </div>
