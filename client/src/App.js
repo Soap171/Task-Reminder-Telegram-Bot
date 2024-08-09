@@ -1,23 +1,39 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+
+const HeaderFooterWrapper = ({ children }) => {
+  const location = useLocation();
+  const hideHeaderFooter =
+    location.pathname === "/login" || location.pathname === "/signup";
+
+  return (
+    <>
+      {!hideHeaderFooter && <Header />}
+      {children}
+      {!hideHeaderFooter && <Footer />}
+    </>
+  );
+};
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-        <Footer />
+        <HeaderFooterWrapper>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+          </Routes>
+        </HeaderFooterWrapper>
       </BrowserRouter>
     </div>
   );

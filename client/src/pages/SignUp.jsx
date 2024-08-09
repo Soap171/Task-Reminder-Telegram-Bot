@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import logoImg from "../images/Logo_trans.png";
 import { Link } from "react-router-dom";
 
-function Login() {
+function SignUp() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (e) => {
@@ -39,7 +40,7 @@ function Login() {
                         </a>
                       </div>
                       <h4 className="text-center">
-                        Welcome back you've been missed!
+                        Start to Remind your Tasks
                       </h4>
                     </div>
                   </div>
@@ -54,17 +55,36 @@ function Login() {
                   <div className="col-12">
                     <div className="form-floating mb-3">
                       <input
+                        type="email"
+                        className={`form-control ${
+                          validated && !username ? "is-invalid" : ""
+                        }`}
+                        name="email"
+                        id="email"
+                        placeholder="name@example.com"
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      />
+                      <label htmlFor="email" className="form-label">
+                        Email
+                      </label>
+                      <div className="invalid-feedback">
+                        Please enter a valid email address.
+                      </div>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
                         type="text"
                         className={`form-control ${
                           validated && !username ? "is-invalid" : ""
                         }`}
                         name="username"
                         id="username"
-                        placeholder="user123"
+                        placeholder="name@example.com"
                         onChange={(e) => setUsername(e.target.value)}
                         required
                       />
-                      <label htmlFor="email" className="form-label">
+                      <label htmlFor="username" className="form-label">
                         Username
                       </label>
                       <div className="invalid-feedback">
@@ -99,7 +119,7 @@ function Login() {
                         className="btn bsb-btn-xl btn-primary"
                         type="submit"
                       >
-                        Log in now
+                        Create a new account
                       </button>
                     </div>
                   </div>
@@ -109,16 +129,16 @@ function Login() {
                     <hr className="mt-5 mb-4 border-secondary-subtle" />
                     <div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
                       <Link
-                        to="/signup"
-                        className="link-secondary text-decoration-none"
-                      >
-                        Create new account
-                      </Link>
-                      <Link
                         to="#"
                         className="link-secondary text-decoration-none"
                       >
-                        Forgot password
+                        Forget Password
+                      </Link>
+                      <Link
+                        to="/login"
+                        className="link-secondary text-decoration-none"
+                      >
+                        Login
                       </Link>
                     </div>
                   </div>
@@ -132,4 +152,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignUp;
