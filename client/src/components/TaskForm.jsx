@@ -11,7 +11,7 @@ function TaskForm({ selectedTask, onSubmit }) {
 
   useEffect(() => {
     if (selectedTask) {
-      setTask(selectedTask.name);
+      setTask(selectedTask.description);
       setSelectedDate(new Date(selectedTask.dueDate));
     }
   }, [selectedTask]);

@@ -1,14 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TaskView from "./TaskView";
 import TaskForm from "./TaskForm";
-function TaskManager() {
-  const [tasks, setTasks] = useState([
-    { id: 1, name: "Task 1", dueDate: "2023-10-10" },
-    { id: 2, name: "Task 2", dueDate: "2023-10-15" },
-    { id: 3, name: "Task 3", dueDate: "2023-10-20" },
-  ]);
+import { useQuery } from "@tanstack/react-query";
+import { fetchTasks } from "../api/tasks";
 
+function TaskManager() {
+  // Hooks are always called at the top level
+  const {
+    isLoading,
+    isError,
+    data: fetchedTasks,
+    error,
+  } = useQuery({
+    queryKey: ["tasks"],
+    queryFn: fetchTasks,
+  });
+
+  const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
+
+  // This effect runs after the data is fetched
+  useEffect(() => {
+    if (fetchedTasks) {
+      setTasks(fetchedTasks);
+    }
+  }, [fetchedTasks]);
+
+  // Conditional rendering without affecting hook calls
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error: {error.message}</div>;
+  }
 
   const handleUpdate = (task) => {
     setSelectedTask(task);
