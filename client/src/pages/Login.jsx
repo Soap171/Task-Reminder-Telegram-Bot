@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import logoImg from "../images/Logo_trans.png";
 import { Link } from "react-router-dom";
+import { useLogin } from "../hooks/useLogin";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [validated, setValidated] = useState(false);
+  const { login, error, loading, success } = useLogin();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
       e.stopPropagation();
     } else {
-      // other logic
+      await login(username, password);
     }
     setValidated(true);
   };
@@ -98,9 +100,21 @@ function Login() {
                       <button
                         className="btn bsb-btn-xl btn-primary"
                         type="submit"
+                        disabled={loading}
                       >
-                        Log in now
+                        {loading ? "Logging" : "Login"}
                       </button>
+                      {error && (
+                        <div className="alert alert-danger mt-4" role="alert">
+                          {error}
+                        </div>
+                      )}
+
+                      {success === true && (
+                        <div className="alert alert-success mt-4">
+                          Logged In
+                        </div>
+                      )}
                     </div>
                   </div>
                 </form>

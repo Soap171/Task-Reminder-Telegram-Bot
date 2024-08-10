@@ -10,7 +10,7 @@ import SignUp from "./pages/SignUp";
 const HeaderFooterWrapper = ({ children }) => {
   const location = useLocation();
   const hideHeaderFooter =
-    location.pathname === "/login" || location.pathname === "/signup";
+    location.pathname === "/login" || location.pathname === "/SignUp";
 
   return (
     <>

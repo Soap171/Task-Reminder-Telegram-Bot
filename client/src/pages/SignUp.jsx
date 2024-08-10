@@ -1,20 +1,22 @@
 import React, { useState } from "react";
 import logoImg from "../images/Logo_trans.png";
 import { Link } from "react-router-dom";
+import { useSignUp } from "../hooks/useSignUp";
 
 function SignUp() {
+  const { signUpFn, error, loading, success } = useSignUp();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [TelegramId, setTelegramId] = useState("");
   const [validated, setValidated] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
       e.stopPropagation();
     } else {
-      // other logic
+      await signUpFn(username, password, TelegramId);
     }
     setValidated(true);
   };
@@ -55,18 +57,18 @@ function SignUp() {
                   <div className="col-12">
                     <div className="form-floating mb-3">
                       <input
-                        type="email"
+                        type="text"
                         className={`form-control ${
                           validated && !username ? "is-invalid" : ""
                         }`}
-                        name="email"
-                        id="email"
+                        name="telegramid"
+                        id="telegramid"
                         placeholder="name@example.com"
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setTelegramId(e.target.value)}
                         required
                       />
-                      <label htmlFor="email" className="form-label">
-                        Email
+                      <label htmlFor="telegramid" className="form-label">
+                        Telegram Id
                       </label>
                       <div className="invalid-feedback">
                         Please enter a valid email address.
@@ -118,9 +120,23 @@ function SignUp() {
                       <button
                         className="btn bsb-btn-xl btn-primary"
                         type="submit"
+                        disabled={loading}
                       >
-                        Create a new account
+                        {loading
+                          ? "Creating account..."
+                          : "Create a new account"}
                       </button>
+                      {error && (
+                        <div className="alert alert-danger mt-4" role="alert">
+                          {error}
+                        </div>
+                      )}
+
+                      {success === true && (
+                        <div className="alert alert-success mt-4">
+                          Registered
+                        </div>
+                      )}
                     </div>
                   </div>
                 </form>

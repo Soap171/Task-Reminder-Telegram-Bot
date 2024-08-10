@@ -83,6 +83,7 @@ export const signUp = async (req, res, next) => {
       })
       .json(userWithoutPassword); // send token with user details
   } catch (error) {
+    console.log(error);
     return next(errorHandler(500, "Internal Server Error"));
   }
 };
