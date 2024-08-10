@@ -26,6 +26,11 @@ function Header() {
             Contact
           </Link>
         </li>
+        <li className="nav-item">
+          <Link className="nav-link text-muted " to="/contact">
+            Login
+          </Link>
+        </li>
       </ul>
     </nav>
   );

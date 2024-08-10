@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Img from "../images/Form.png";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import the DatePicker CSS
 import "../index.css"; // Custom CSS
 
-function TaskForm() {
+function TaskForm({ selectedTask, onSubmit }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [task, setTask] = useState("");
   const [validated, setValidated] = useState(false);
+
+  useEffect(() => {
+    if (selectedTask) {
+      setTask(selectedTask.name);
+      setSelectedDate(new Date(selectedTask.dueDate));
+    }
+  }, [selectedTask]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,7 +24,7 @@ function TaskForm() {
       e.stopPropagation();
     } else {
       // Form is valid, proceed with task submission logic
-      console.log("Task:", task, "Date:", selectedDate);
+      onSubmit({ ...selectedTask, name: task, dueDate: selectedDate });
     }
 
     setValidated(true);
@@ -50,6 +57,7 @@ function TaskForm() {
                   name="taskName"
                   id="taskName"
                   placeholder="Task Name"
+                  value={task}
                   onChange={(e) => setTask(e.target.value)}
                   required
                 />
@@ -84,7 +92,7 @@ function TaskForm() {
             </div>
             <div className="col-12 text-start">
               <button className="btn btn-primary" type="submit">
-                Add The Task
+                {selectedTask ? "Update Task" : "Add The Task"}
               </button>
             </div>
           </form>

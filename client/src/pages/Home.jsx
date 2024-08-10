@@ -1,13 +1,13 @@
 import React from "react";
 import Hero from "../components/Hero";
-import TaskForm from "../components/TaskForm";
+import TaskManager from "../components/TaskManager";
 
 function Home() {
   return (
     <div>
       <Hero />
-      <TaskForm />
-      Home
+
+      <TaskManager />
     </div>
   );
 }
