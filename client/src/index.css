@@ -1,0 +1,11 @@
+.custom-input {
+  height: calc(3.5rem + 2px);
+  padding: 1rem 0.75rem;
+  border-radius: 0.25rem;
+  border-color: #3b5e7c;
+}
+
+.custom-input:focus {
+  border-color: #495057;
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
