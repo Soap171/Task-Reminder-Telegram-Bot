@@ -1,6 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import aboutImg from "../images/TaskNotifier.png";
+import aboutImg from "../images/about.png";
 
 function About() {
   return (

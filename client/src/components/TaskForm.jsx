@@ -18,6 +18,7 @@ function TaskForm({ selectedTask, onSubmit }) {
     mutationFn: createTask,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      clearForm();
     },
     onError: (error) => {
       console.error("Error creating task:", error);
@@ -28,12 +29,20 @@ function TaskForm({ selectedTask, onSubmit }) {
     mutationFn: updateTask,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      clearForm();
     },
     onError: (error) => {
       console.error("Error updating task:", error);
     },
   });
 
+  const clearForm = () => {
+    setTask("");
+    setSelectedDate(null);
+    setRecurrence("");
+    setValidated(false);
+    setIsUpdateMode(false);
+  };
   useEffect(() => {
     if (selectedTask) {
       setTask(selectedTask.description);
@@ -72,7 +81,7 @@ function TaskForm({ selectedTask, onSubmit }) {
     setValidated(true);
   };
   return (
-    <div className="container">
+    <div className="container" id="taskForm">
       <div className="row justify-content-center align-items-center">
         <div className="col-md-5 text-center">
           <img src={Img} alt="example" />

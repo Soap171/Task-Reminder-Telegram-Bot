@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import heroImg from "../images/Hero.png";
+import useAuthContext from "../hooks/useAuthContext";
 function Hero() {
+  const { user } = useAuthContext();
   return (
     <div className="container-fluid px-4 py-5 my-5 text-center">
       <div className="lc-block mb-4">
@@ -26,7 +28,11 @@ function Hero() {
 
       <div className="lc-block d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
         {" "}
-        <a className="btn btn-primary btn-lg px-4 gap-3" href="#" role="button">
+        <a
+          className="btn btn-primary btn-lg px-4 gap-3"
+          href={user ? "#taskForm" : "/login"}
+          role="button"
+        >
           Add Task
         </a>
         <Link

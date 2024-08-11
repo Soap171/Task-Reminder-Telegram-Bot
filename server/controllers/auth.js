@@ -54,6 +54,10 @@ export const signUp = async (req, res, next) => {
   }
 
   try {
+    const exitingUser = await User.findOne({ username });
+    const exitingTelegramId = await User.findOne({ telegramId });
+    if (exitingUser || exitingTelegramId)
+      return next(errorHandler(400, "Username or TelegramId already exists"));
     const hashedPassword = await bcrypt.hash(password, 10); // hash the password before send to the db
 
     const user = new User({

@@ -24,7 +24,7 @@ export const useSignUp = () => {
 
     if (!response.ok) {
       setLoading(false);
-      setError(json.error);
+      setError(json.message);
     }
 
     if (response.ok) {

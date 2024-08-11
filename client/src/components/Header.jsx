@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../utils/logo.svg";
+import logo from "../images/Logo.png";
 import { Link } from "react-router-dom";
 import useAuthContext from "../hooks/useAuthContext";
 import { useLogOut } from "../hooks/useLogOut";
@@ -14,11 +14,10 @@ function Header() {
         <img
           src={logo}
           alt="Logo"
-          width="30"
-          height="24"
-          className="d-inline-block align-text-top"
+          width="120"
+          height="40"
+          className="d-inline-block align-text-top ms-1"
         />
-        <span className="fw-bold">NotifiBot</span>
       </Link>
       <ul className="nav justify-content-end">
         <li className="nav-item">
@@ -33,10 +32,13 @@ function Header() {
         </li>
         <li className="nav-item">
           {user ? (
-            <span className="nav-link">{user.username}</span>
+            <span className="nav-link">
+              <span className="text-muted">Logged as :</span>
+              {user.username}
+            </span>
           ) : (
-            <Link className="nav-link text-black" to="/login">
-              Login
+            <Link className="nav-link " to="/login">
+              <span>Login</span>
             </Link>
           )}
         </li>

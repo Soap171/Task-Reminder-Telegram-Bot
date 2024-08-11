@@ -60,3 +60,25 @@ export const updateTask = async ({ id, description, dueDate, recurrence }) => {
     throw new Error("Failed to update task");
   }
 };
+
+export const deleteTask = async (id) => {
+  try {
+    const response = await fetch(`/api/tasks/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+
+    const deletedTask = await response.json();
+    return deletedTask;
+  } catch (error) {
+    console.error("Failed to delete task:", error);
+    throw error;
+  }
+};

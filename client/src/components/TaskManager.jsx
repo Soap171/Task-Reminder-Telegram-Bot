@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import TaskView from "./TaskView";
 import TaskForm from "./TaskForm";
-import { useQuery } from "@tanstack/react-query";
-import { fetchTasks } from "../api/tasks";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { fetchTasks, deleteTask } from "../api/tasks";
+import useAuthContext from "../hooks/useAuthContext";
 
 function TaskManager() {
-  // Hooks are always called at the top level
+  const queryClient = useQueryClient();
   const {
     isLoading,
     isError,
@@ -15,6 +16,7 @@ function TaskManager() {
     queryKey: ["tasks"],
     queryFn: fetchTasks,
   });
+  const { user } = useAuthContext();
 
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
@@ -26,6 +28,16 @@ function TaskManager() {
     }
   }, [fetchedTasks]);
 
+  const deleteTaskMutation = useMutation({
+    mutationFn: deleteTask,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+  });
+
+  if (!user) {
+    return <div></div>;
+  }
   // Conditional rendering without affecting hook calls
   if (isLoading) {
     return <div>Loading...</div>;
@@ -41,6 +53,7 @@ function TaskManager() {
   };
 
   const handleDelete = (task) => {
+    deleteTaskMutation.mutate(task._id);
     setTasks(tasks.filter((t) => t.id !== task.id));
   };
 
