@@ -3,10 +3,11 @@ import Img from "../images/Form.png";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import the DatePicker CSS
 import "../index.css"; // Custom CSS
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTask } from "../api/tasks";
 
 function TaskForm({ selectedTask, onSubmit }) {
+  const queryClient = useQueryClient();
   const [selectedDate, setSelectedDate] = useState(null);
   const [task, setTask] = useState("");
   const [recurrence, setRecurrence] = useState("");
@@ -14,6 +15,7 @@ function TaskForm({ selectedTask, onSubmit }) {
 
   const createTaskMutation = useMutation({
     mutationFn: createTask,
+    onSuccess: queryClient.invalidateQueries({ queryKey: ["tasks"] }),
   });
 
   useEffect(() => {
