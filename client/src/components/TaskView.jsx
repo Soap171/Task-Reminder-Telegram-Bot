@@ -12,6 +12,7 @@ function TaskView({ tasks, onUpdate, onDelete }) {
           <div>
             <h5>{task.description}</h5>
             <p className="mb-0 text-muted">Due: {task.dueDate}</p>
+            <p className="mb-0">Recurrence: {task.recurrence}</p>
           </div>
           <div>
             <FaEdit

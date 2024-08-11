@@ -3,11 +3,18 @@ import Img from "../images/Form.png";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import the DatePicker CSS
 import "../index.css"; // Custom CSS
+import { useMutation } from "@tanstack/react-query";
+import { createTask } from "../api/tasks";
 
 function TaskForm({ selectedTask, onSubmit }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [task, setTask] = useState("");
+  const [recurrence, setRecurrence] = useState("");
   const [validated, setValidated] = useState(false);
+
+  const createTaskMutation = useMutation({
+    mutationFn: createTask,
+  });
 
   useEffect(() => {
     if (selectedTask) {
@@ -23,8 +30,11 @@ function TaskForm({ selectedTask, onSubmit }) {
     if (form.checkValidity() === false || task.trim() === "" || !selectedDate) {
       e.stopPropagation();
     } else {
-      // Form is valid, proceed with task submission logic
-      onSubmit({ ...selectedTask, name: task, dueDate: selectedDate });
+      createTaskMutation.mutate({
+        description: task,
+        dueDate: selectedDate,
+        recurrence: recurrence,
+      });
     }
 
     setValidated(true);
@@ -88,6 +98,29 @@ function TaskForm({ selectedTask, onSubmit }) {
                     Please select a date.
                   </div>
                 )}
+              </div>
+            </div>
+            <div className="col-12">
+              <div className="form-floating mb-3">
+                <select
+                  className="form-select"
+                  id="recurrence"
+                  value={recurrence}
+                  onChange={(e) => setRecurrence(e.target.value)}
+                  required
+                >
+                  <option value="">Select Recurrence</option>
+                  <option value="none">None</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="yearly">Yearly</option>
+                </select>
+                <label htmlFor="recurrence" className="form-label">
+                  Recurrence
+                </label>
+                <div className="invalid-feedback">
+                  Please select a recurrence.
+                </div>
               </div>
             </div>
             <div className="col-12 text-start">

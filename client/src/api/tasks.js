@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query";
 export const fetchTasks = async () => {
   try {
     const response = await fetch("/api/tasks", {
@@ -20,25 +21,25 @@ export const fetchTasks = async () => {
   }
 };
 
-export const updateTask = async (taskId, updatedTaskData) => {
+export const createTask = async (task) => {
   try {
-    const response = await fetch(`/api/tasks/${taskId}`, {
-      method: "PUT",
+    const response = await fetch("/api/tasks", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "include",
-      body: JSON.stringify(updatedTaskData),
+      body: JSON.stringify(task),
     });
 
     if (!response.ok) {
       throw new Error(`Error: ${response.status}`);
     }
 
-    const updatedTask = await response.json();
-    return updatedTask;
+    const createdTask = await response.json();
+    return createdTask;
   } catch (error) {
-    console.error("Failed to update task:", error);
+    console.error("Failed to create task:", error);
     throw error;
   }
 };
