@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import PasswordReset from "./pages/PasswordReset";
 
 const HeaderFooterWrapper = ({ children }) => {
   const location = useLocation();
@@ -32,6 +33,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/password-reset" element={<PasswordReset />} />
           </Routes>
         </HeaderFooterWrapper>
       </BrowserRouter>

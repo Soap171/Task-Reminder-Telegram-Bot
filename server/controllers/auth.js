@@ -100,3 +100,25 @@ export const signOut = (req, res) => {
     return next(errorHandler(500, "Internal Server Error"));
   }
 };
+
+// Reset password function
+export const resetPassword = async (req, res, next) => {
+  const { username, telegramId, password } = req.body;
+
+  if (!username || !telegramId) {
+    return next(errorHandler(400, "Username and telegramId are required"));
+  }
+
+  try {
+    const user = await User.findOne({ username, telegramId });
+    if (!user) return next(errorHandler(404, "User not found"));
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    user.password = hashedPassword;
+    await user.save();
+    res.status(200).json("Password reset successfully");
+  } catch (error) {
+    return next(errorHandler(500, "Internal Server Error"));
+  }
+};

@@ -1,4 +1,3 @@
-import { useMutation } from "@tanstack/react-query";
 export const fetchTasks = async () => {
   try {
     const response = await fetch("/api/tasks", {
