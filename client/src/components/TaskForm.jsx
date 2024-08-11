@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import the DatePicker CSS
 import "../index.css"; // Custom CSS
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createTask } from "../api/tasks";
+import { createTask, updateTask } from "../api/tasks";
 
 function TaskForm({ selectedTask, onSubmit }) {
   const queryClient = useQueryClient();
@@ -12,19 +12,38 @@ function TaskForm({ selectedTask, onSubmit }) {
   const [task, setTask] = useState("");
   const [recurrence, setRecurrence] = useState("");
   const [validated, setValidated] = useState(false);
+  const [isUpdateMode, setIsUpdateMode] = useState(false);
 
   const createTaskMutation = useMutation({
     mutationFn: createTask,
-    onSuccess: queryClient.invalidateQueries({ queryKey: ["tasks"] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+    onError: (error) => {
+      console.error("Error creating task:", error);
+    },
+  });
+
+  const createUpdateMutation = useMutation({
+    mutationFn: updateTask,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+    onError: (error) => {
+      console.error("Error updating task:", error);
+    },
   });
 
   useEffect(() => {
     if (selectedTask) {
       setTask(selectedTask.description);
       setSelectedDate(new Date(selectedTask.dueDate));
+      setRecurrence(selectedTask.recurrence);
+      setIsUpdateMode(true);
+    } else {
+      setIsUpdateMode(false);
     }
   }, [selectedTask]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -32,16 +51,26 @@ function TaskForm({ selectedTask, onSubmit }) {
     if (form.checkValidity() === false || task.trim() === "" || !selectedDate) {
       e.stopPropagation();
     } else {
-      createTaskMutation.mutate({
-        description: task,
-        dueDate: selectedDate,
-        recurrence: recurrence,
-      });
+      if (isUpdateMode) {
+        createUpdateMutation.mutate({
+          id: selectedTask._id,
+          description: task,
+          dueDate: selectedDate,
+          recurrence: recurrence,
+        });
+        console.log("update task");
+      } else {
+        createTaskMutation.mutate({
+          description: task,
+          dueDate: selectedDate,
+          recurrence: recurrence,
+        });
+        console.log("create task");
+      }
     }
 
     setValidated(true);
   };
-
   return (
     <div className="container">
       <div className="row justify-content-center align-items-center">

@@ -37,6 +37,7 @@ function TaskManager() {
 
   const handleUpdate = (task) => {
     setSelectedTask(task);
+    console.log(task._id);
   };
 
   const handleDelete = (task) => {

@@ -84,6 +84,7 @@ export const deleteTask = async (req, res, next) => {
 export const updateTask = async (req, res, next) => {
   const id = req.params.id;
   const userId = req.userId;
+  console.log("inside update task");
 
   if (!id || !userId) {
     return next(errorHandler(400, "Task id and user id are required"));

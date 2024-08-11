@@ -43,3 +43,20 @@ export const createTask = async (task) => {
     throw error;
   }
 };
+
+export const updateTask = async ({ id, description, dueDate, recurrence }) => {
+  console.log(id, description, dueDate, recurrence);
+  try {
+    const response = await fetch(`/api/tasks/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ description, dueDate, recurrence }),
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to update task");
+  }
+};
