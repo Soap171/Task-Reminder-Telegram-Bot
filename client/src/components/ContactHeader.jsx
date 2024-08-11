@@ -15,9 +15,9 @@ function ContactHeader() {
           </p>
         </div>
         <div>
-          <Link className="btn btn-primary" to="contact">
+          <a className="btn btn-primary" href="#contact">
             Contact Me
-          </Link>
+          </a>
         </div>
       </div>
     </div>
