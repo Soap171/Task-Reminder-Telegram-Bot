@@ -35,7 +35,10 @@ async function sendNotification(task) {
     //if (Math.random() < 0.5) {
     // throw new Error("Simulated failure");
     //}  (To test the retry mechanism)
-    await bot.sendMessage(chatId, `Reminder: ${task.description} is due now!`);
+    await bot.sendMessage(
+      chatId,
+      `Reminder: ${task.description} is due now! ⏰`
+    );
     task.notified = true;
 
     // Handle recurrence
@@ -82,13 +85,13 @@ bot.onText(/\/mytasks/, async (msg) => {
   const tasks = await Task.find({ telegramId: chatId });
 
   if (tasks.length === 0) {
-    await bot.sendMessage(chatId, "You have no tasks.");
+    await bot.sendMessage(chatId, "📭 You have no tasks.");
   } else {
-    let message = "Your tasks:\n";
+    let message = "📝 Your tasks:\n";
     tasks.forEach((task) => {
       message += `\n- ${
         task.description
-      } (Due: ${task.dueDate.toDateString()})`;
+      } (Due: ${task.dueDate.toDateString()}) 📅`;
     });
     await bot.sendMessage(chatId, message);
   }
@@ -96,7 +99,7 @@ bot.onText(/\/mytasks/, async (msg) => {
 
 bot.onText(/\/myid/, async (msg) => {
   const chatId = msg.chat.id;
-  await bot.sendMessage(chatId, `Your Telegram ID is: ${chatId}`);
+  await bot.sendMessage(chatId, `🆔 Your Telegram ID is: ${chatId}`);
 });
 
 export default bot;
