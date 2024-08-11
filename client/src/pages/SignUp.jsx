@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logoImg from "../images/Logo_trans.png";
+import logoImg from "../images/Login-Sign.png";
 import { Link } from "react-router-dom";
 import { useSignUp } from "../hooks/useSignUp";
 
@@ -36,12 +36,12 @@ function SignUp() {
                           <img
                             src={logoImg}
                             alt="Logo"
-                            width="175"
+                            width="200"
                             height="130"
                           />
                         </a>
                       </div>
-                      <h4 className="text-center">
+                      <h4 className="text-center text-muted">
                         Start to Remind your Tasks
                       </h4>
                     </div>
@@ -144,12 +144,7 @@ function SignUp() {
                   <div className="col-12">
                     <hr className="mt-5 mb-4 border-secondary-subtle" />
                     <div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
-                      <Link
-                        to="#"
-                        className="link-secondary text-decoration-none"
-                      >
-                        Forget Password
-                      </Link>
+                      <span>Already a member ?</span>
                       <Link
                         to="/login"
                         className="link-secondary text-decoration-none"

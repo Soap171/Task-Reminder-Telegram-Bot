@@ -89,10 +89,10 @@ function PasswordReset() {
                         required
                       />
                       <label htmlFor="password" className="form-label">
-                        Password
+                        New Password
                       </label>
                       <div className="invalid-feedback">
-                        Please provide a password.
+                        Please provide new a password.
                       </div>
                     </div>
                   </div>
@@ -104,8 +104,8 @@ function PasswordReset() {
                         disabled={loading}
                       >
                         {loading
-                          ? "Creating account..."
-                          : "Create a new account"}
+                          ? "Resetting your password..."
+                          : "Reset Password"}
                       </button>
                       {error && (
                         <div className="alert alert-danger mt-4" role="alert">

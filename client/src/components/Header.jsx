@@ -33,7 +33,7 @@ function Header() {
         <li className="nav-item">
           {user ? (
             <span className="nav-link">
-              <span className="text-muted">Logged as :</span>
+              <span className="text-muted">Logged as </span>
               {user.username}
             </span>
           ) : (

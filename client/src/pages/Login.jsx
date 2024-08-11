@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logoImg from "../images/Logo_trans.png";
+import logoImg from "../images/Login-Sign.png";
 import { Link } from "react-router-dom";
 import { useLogin } from "../hooks/useLogin";
 
@@ -35,12 +35,12 @@ function Login() {
                           <img
                             src={logoImg}
                             alt="Logo"
-                            width="175"
+                            width="200"
                             height="130"
                           />
                         </a>
                       </div>
-                      <h4 className="text-center">
+                      <h4 className="text-center text-muted">
                         Welcome back you've been missed!
                       </h4>
                     </div>
@@ -129,7 +129,7 @@ function Login() {
                         Create new account
                       </Link>
                       <Link
-                        to="#"
+                        to="/reset-password"
                         className="link-secondary text-decoration-none"
                       >
                         Forgot password

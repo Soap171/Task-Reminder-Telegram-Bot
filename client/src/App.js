@@ -11,7 +11,7 @@ import PasswordReset from "./pages/PasswordReset";
 const HeaderFooterWrapper = ({ children }) => {
   const location = useLocation();
   const hideHeaderFooter =
-    location.pathname === "/login" || location.pathname === "/SignUp";
+    location.pathname === "/login" || location.pathname === "/signup";
 
   return (
     <>
@@ -33,7 +33,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/password-reset" element={<PasswordReset />} />
+            <Route path="/reset-password" element={<PasswordReset />} />
           </Routes>
         </HeaderFooterWrapper>
       </BrowserRouter>
